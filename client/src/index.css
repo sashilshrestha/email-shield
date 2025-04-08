@@ -1,0 +1,100 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 215 25% 97%;
+    --foreground: 220 20% 20%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 20% 20%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 20% 20%;
+
+    --primary: 217 91% 60%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 215 16% 47%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 215 16% 90%;
+    --muted-foreground: 215 16% 45%;
+
+    --accent: 215 25% 95%;
+    --accent-foreground: 217 33% 17%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214 32% 90%;
+    --input: 214 32% 90%;
+    --ring: 217 33% 17%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 220 26% 18%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 217 91% 60%;
+    --sidebar-primary-foreground: 210 40% 98%;
+    --sidebar-accent: 215 25% 27%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 215 25% 27%;
+    --sidebar-ring: 217 91% 60%;
+  }
+
+  .dark {
+    --background: 217 33% 17%;
+    --foreground: 210 40% 98%;
+
+    --card: 217 33% 20%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 217 33% 20%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 217 91% 60%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 215 26% 30%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 215 26% 30%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 215 26% 30%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 215 26% 30%;
+    --input: 215 26% 30%;
+    --ring: 217 91% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.hero-gradient {
+  background: linear-gradient(145deg, rgba(37, 99, 235, 0.10) 0%, rgba(59, 130, 246, 0.05) 100%);
+}
+
+.grid-pattern {
+  background-image: radial-gradient(rgba(37, 99, 235, 0.1) 1px, transparent 1px);
+  background-size: 25px 25px;
+}
+
+.shadow-card {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}

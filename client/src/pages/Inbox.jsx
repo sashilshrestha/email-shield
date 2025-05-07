@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { Scan, ShieldPlus } from 'lucide-react';
+import ScanResults from '../components/ScanedResults';
 
 // Mock email data
 const mockEmails = [
@@ -82,12 +84,14 @@ const mockEmails = [
   },
 ];
 
-export default function InboxView({ onScanEmail }) {
+export default function InboxView() {
   const [emails, setEmails] = useState(mockEmails);
   const [searchTerm, setSearchTerm] = useState('');
   const [hoveredEmail, setHoveredEmail] = useState(null);
   const [scanningEmail, setScanningEmail] = useState(null);
   const [showScanDialog, setShowScanDialog] = useState(false);
+  const [showScanedScreen, setShowScannedScreen] = useState(false);
+  const [scanResults, setScanResults] = useState(null);
 
   const filteredEmails = emails.filter(
     (email) =>
@@ -102,7 +106,9 @@ export default function InboxView({ onScanEmail }) {
     // Simulate scanning process
     setTimeout(() => {
       setShowScanDialog(false);
-      onScanEmail(email);
+      // Props Wala Idea Ho
+      // onScanEmail(email);
+      handleScanEmail(email);
     }, 2000);
   };
 
@@ -120,138 +126,172 @@ export default function InboxView({ onScanEmail }) {
     }
   };
 
+  const handleScanEmail = (email) => {
+    // setSelectedEmail(email);
+    // Simulate scanning process
+    setTimeout(() => {
+      const result = {
+        id: email.id,
+        subject: email.subject,
+        sender: email.sender,
+        scanDate: new Date().toISOString(),
+        threats:
+          Math.random() > 0.7
+            ? [
+                {
+                  type: 'Phishing',
+                  severity: 'High',
+                  description: 'Suspicious link detected',
+                },
+                {
+                  type: 'Malware',
+                  severity: 'Medium',
+                  description: 'Potential malicious attachment',
+                },
+              ]
+            : [],
+        isSafe: Math.random() > 0.7 ? false : true,
+        score: Math.floor(Math.random() * 100),
+      };
+      setScanResults(result);
+      setShowScannedScreen(true);
+    }, 1000);
+  };
+
   return (
-    <div className="p-6 h-full flex flex-col">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-        <h1 className="text-2xl font-bold md:text-3xl">Inbox</h1>
-        <div className="flex items-center gap-2">
-          <div className="relative flex-1 md:w-80">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
-            <input
-              type="search"
-              placeholder="Search emails..."
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-          <button className="p-2 rounded-lg border border-gray-300 bg-white hover:bg-gray-50 transition-colors">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 text-gray-500"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.5}
-                d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
-              />
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      <div className="flex-1 bg-white rounded-xl overflow-hidden text-sm">
-        <div className="h-full overflow-auto">
-          {filteredEmails.length === 0 ? (
-            <div className="flex items-center justify-center h-full">
-              <p className="text-gray-500">No emails found</p>
+    <>
+      {!showScanedScreen && (
+        <>
+          <div className="p-6 h-full flex flex-col relative">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+              <h1 className="text-2xl font-bold md:text-3xl">Inbox</h1>
+              <div className="flex items-center gap-2">
+                <div className="relative flex-1 md:w-80">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                  </svg>
+                  <input
+                    type="search"
+                    placeholder="Search emails..."
+                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                </div>
+                <button className="p-2 rounded-lg border border-gray-300 bg-white hover:bg-gray-50 transition-colors">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5 text-gray-500"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.5}
+                      d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
-          ) : (
-            <ul className="divide-y divide-gray-200">
-              {filteredEmails.map((email) => (
-                <li
-                  key={email.id}
-                  className={`relative p-4 hover:bg-gray-50 transition-colors cursor-pointer ${
-                    !email.read ? 'bg-blue-50' : ''
-                  }`}
-                  onMouseEnter={() => setHoveredEmail(email.id)}
-                  onMouseLeave={() => setHoveredEmail(null)}
-                >
-                  <div className="flex items-start gap-4 flex-col">
-                    <div className="w-full">
-                      <div className="flex justify-between gap-2">
-                        <span
-                          className={`font-medium ${
-                            !email.read ? 'font-semibold' : ''
-                          }`}
-                        >
-                          {email.sender}
-                        </span>
-                        <span className="text-xs text-gray-500">
-                          {formatDate(email.date)}
-                        </span>
-                      </div>
-                      <h3
-                        className={`mt-1 ${!email.read ? 'font-semibold' : ''}`}
-                      >
-                        {email.subject}
-                      </h3>
-                      <p className="text-sm text-gray-500 truncate mt-1">
-                        {email.preview}
-                      </p>
-                    </div>
 
-                    {email.hasAttachment && (
-                      <div className="text-xs bg-gray-100 px-2 py-1 rounded-full text-gray-600">
-                        Attachment
-                      </div>
-                    )}
+            <div className="flex-1 bg-white overflow-hidden text-xs">
+              <div className="h-full overflow-auto">
+                {filteredEmails.length === 0 ? (
+                  <div className="flex items-center justify-center h-full">
+                    <p className="text-gray-500">No emails found</p>
                   </div>
-
-                  {hoveredEmail === email.id && (
-                    <div className="absolute right-4 top-1/2 -translate-y-1/2 bg-white shadow-md border border-gray-200 rounded-lg p-1 z-10">
-                      <button
-                        className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleScan(email);
-                        }}
+                ) : (
+                  <ul className="divide-y divide-gray-200">
+                    {filteredEmails.map((email) => (
+                      <li
+                        key={email.id}
+                        className={`relative p-4 hover:bg-gray-50 hover:shadow-lg transition-colors cursor-pointer ${
+                          !email.read ? 'ya unread xa bhane colour auxa' : ''
+                        }`}
+                        onMouseEnter={() => setHoveredEmail(email.id)}
+                        onMouseLeave={() => setHoveredEmail(null)}
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-3.5 w-3.5"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                          />
-                        </svg>
-                        Scan for threats
-                      </button>
-                    </div>
-                  )}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      </div>
+                        <div className="flex items-start gap-2 flex-col">
+                          <div className="w-full">
+                            <div className="grid grid-cols-12 gap-2">
+                              {/* Sender */}
+                              <div className="col-span-2">
+                                <span
+                                  className={`font-medium ${
+                                    !email.read ? 'font-semibold' : ''
+                                  }`}
+                                >
+                                  {email.sender}
+                                </span>
+                              </div>
+                              {/* Subject and Date */}
+                              <div
+                                className={`col-span-10 flex justify-between ${
+                                  !email.read ? 'font-semibold' : ''
+                                }`}
+                              >
+                                <h5>{email.subject}</h5>
+                                <span className="text-xs text-gray-500">
+                                  {formatDate(email.date)}
+                                </span>
+                              </div>
+                            </div>
+                            <p className=" text-gray-500 truncate mt-2">
+                              {email.preview}
+                            </p>
+                          </div>
 
+                          {email.hasAttachment && (
+                            <div
+                              className="bg-gray-200 px-2 py-1 rounded-full text-gray-600"
+                              style={{ fontSize: '0.65rem' }}
+                            >
+                              Attachment
+                            </div>
+                          )}
+                        </div>
+
+                        {hoveredEmail === email.id && (
+                          <div className="absolute right-4 top-1/2 -translate-y-1/2 bg-white shadow-md border border-gray-200 rounded-lg z-10">
+                            <button
+                              className="flex items-center px-3 py-2 gap-1 text-xs font-medium text-blue-600 hover:bg-blue-50 rounded-md transition-colors cursor-progress"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleScan(email);
+                              }}
+                            >
+                              <ShieldPlus strokeWidth={2} size={16} />
+
+                              <div>Scan for threats</div>
+                            </button>
+                          </div>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
+          </div>
+        </>
+      )}
       {/* Scanning Dialog */}
       {showScanDialog && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-blue-900/80 backdrop-blur-sm bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl shadow-lg max-w-md w-full mx-4 overflow-hidden">
             <div className="p-6">
               <h3 className="text-lg font-medium mb-1">Scanning Email</h3>
@@ -273,6 +313,7 @@ export default function InboxView({ onScanEmail }) {
           </div>
         </div>
       )}
-    </div>
+      {showScanedScreen && <ScanResults email={scanResults} />}
+    </>
   );
 }

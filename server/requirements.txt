@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+sqlalchemy
+pydantic
+python-multipart
+
+PyJWT
+pydantic[email]
+numpy
+joblib
+tensorflow
+scikit-learn
+Pillow

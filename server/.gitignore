@@ -1,0 +1,27 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Virtual environment folder
+env/
+venv/
+
+# Environment variables file
+.env
+
+# Test database files
+test_db.db
+*.db
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# IDE/editor folders (optional, depending on your IDE)
+.idea/
+.vscode/

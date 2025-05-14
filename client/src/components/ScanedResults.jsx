@@ -1,5 +1,3 @@
-'use client';
-
 import { useEffect } from 'react';
 
 export default function ScannedResults({ results, onBack }) {
@@ -142,6 +140,12 @@ export default function ScannedResults({ results, onBack }) {
                 />
               </svg>
               Share Results
+            </button>
+            <button
+              className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-colors flex items-center gap-1 ${'bg-blue-500 text-white hover:bg-blue-600'}`}
+            >
+              <AlertCircle className="h-4 w-4" />
+              <span>Send to Admin</span>
             </button>
           </div>
         </div>

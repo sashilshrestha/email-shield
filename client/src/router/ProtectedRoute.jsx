@@ -5,6 +5,8 @@ export async function checkTokenExists() {
   try {
     const response = await fetch('http://localhost:8000/check-token');
     const data = await response.json();
+    console.log(data);
+
     return data.token_exists;
   } catch (error) {
     console.error('Error checking token:', error);

@@ -29,9 +29,10 @@ export const router = createBrowserRouter([
           // { path: 'settings', Component: SettingsPage },
         ],
       },
-      { path: 'login', Component: LoginPage },
+      // { path: 'login', Component: LoginPage },
     ],
   },
+  { path: 'login', Component: LoginPage },
   {
     path: 'admin',
     Component: ProtectedRoute,
@@ -45,8 +46,9 @@ export const router = createBrowserRouter([
           { path: 'user-reports', Component: UserReportsPage },
         ],
       },
-      { path: 'login', Component: LoginPage },
+      // { path: 'login', Component: LoginPage },
     ],
   },
+
   { path: '/settings', Component: SettingsPage },
 ]);

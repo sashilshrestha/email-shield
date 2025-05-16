@@ -104,7 +104,6 @@ export default function InboxView() {
         const { emails } = await response.json();
         setEmails(emails);
         setIsLoading(false);
-        console.log(emails);
       } catch (error) {
         console.error('Error fetching emails:', error);
         setIsLoading(false);
@@ -146,36 +145,39 @@ export default function InboxView() {
     }
   };
 
-  const handleScanEmail = (email) => {
-    // setSelectedEmail(email);
-    // Simulate scanning process
-    setTimeout(() => {
-      const result = {
-        id: email.id,
-        subject: email.subject,
-        sender: email.sender,
-        scanDate: new Date().toISOString(),
-        threats:
-          Math.random() > 0.7
-            ? [
-                {
-                  type: 'Phishing',
-                  severity: 'High',
-                  description: 'Suspicious link detected',
-                },
-                {
-                  type: 'Malware',
-                  severity: 'Medium',
-                  description: 'Potential malicious attachment',
-                },
-              ]
-            : [],
-        isSafe: Math.random() > 0.7 ? false : true,
-        score: Math.floor(Math.random() * 100),
-      };
-      setScanResults(result);
+  const handleScanEmail = async (email) => {
+    try {
+      const filename = email.attachments[0].filename;
+      if (!filename) throw new Error('No attachment found');
+
+      const token = localStorage.getItem('token');
+
+      const response = await fetch(
+        `http://localhost:8000/predict?filename=${filename}`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) throw new Error('Error scanning the file');
+
+      const result = await response.json();
+
+      const scanResult = { ...email, malwareDetails: result };
+
+      console.log(scanResult);
+
+      setScanResults(scanResult);
+
       setShowScannedScreen(true);
-    }, 1000);
+    } catch (error) {
+      console.error('Error scanning email:', error);
+    } finally {
+      setShowScanDialog(false);
+    }
   };
 
   return (
@@ -238,7 +240,7 @@ export default function InboxView() {
                       role="status"
                       aria-label="loading"
                     >
-                      <span class="sr-only">Loading...</span>
+                      <span className="sr-only">Loading...</span>
                     </div>
                     <div className="font-semibold tracking-tight">
                       {' '}
@@ -332,7 +334,7 @@ export default function InboxView() {
       )}
       {/* Scanning Dialog */}
       {showScanDialog && (
-        <div className="fixed inset-0 bg-blue-900/80 backdrop-blur-sm bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-gray-400/80 backdrop-blur-sm bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl shadow-lg max-w-md w-full mx-4 overflow-hidden">
             <div className="p-6">
               <h3 className="text-lg font-medium mb-1">Scanning Email</h3>

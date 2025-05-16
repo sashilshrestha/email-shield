@@ -1,4 +1,4 @@
-from fastapi import FastAPI, UploadFile, File, HTTPException, Depends
+from fastapi import FastAPI, UploadFile, File, HTTPException, Depends, Request, Header
 from schemas.user_schema import UserCreate, UserLogin
 from services import user_service
 from utils.auth import create_access_token
@@ -14,6 +14,21 @@ from fastapi.responses import JSONResponse
 app = FastAPI()
 init_db()
 
+# Allow cross-origin requests from any origin (replace "*" with specific origins if needed)
+origins = [
+    "*",  # Allow all origins
+    # "http://localhost:5173",  # You can specify your frontend origin if you want
+]
+
+# Add CORS middleware to allow cross-origin requests
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  # Allows all origins or you can specify a list of origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all HTTP methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allow all headers
+)
+
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_DIR = os.path.join(BASE_DIR, "models")
@@ -22,6 +37,14 @@ scaler = joblib.load(os.path.join(MODEL_DIR, "scaler.pkl"))
 pca = joblib.load(os.path.join(MODEL_DIR, "pca.pkl"))
 svm = joblib.load(os.path.join(MODEL_DIR, "svm_model.pkl"))
 classes = joblib.load(os.path.join(MODEL_DIR, "classes.pkl"))
+
+# Load client secrets from credentials.json
+CLIENT_SECRETS_FILE = "credentials.json"
+SCOPES = ["https://www.googleapis.com/auth/gmail.readonly"]
+REDIRECT_URI = "http://localhost:8000/auth/callback"
+
+# Store tokens (you can use a database)
+TOKEN_FILE = "token.json"
 
 
 @app.post("/register")

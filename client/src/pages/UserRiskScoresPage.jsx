@@ -21,100 +21,56 @@ export default function UserRiskScoresPage() {
     {
       id: 1,
       username: 'john.doe',
-      department: 'Finance',
+
       riskScore: 87,
       riskLevel: 'High',
-      factors: [
-        { name: 'External Email Rate', value: 'High', score: 25 },
-        { name: 'Attachment Downloads', value: 'Very High', score: 30 },
-        { name: 'Suspicious Link Clicks', value: 'Medium', score: 15 },
-        { name: 'Malware Detection History', value: 'High', score: 17 },
-      ],
     },
     {
       id: 2,
       username: 'sarah.smith',
-      department: 'Executive',
+
       riskScore: 76,
       riskLevel: 'High',
-      factors: [
-        { name: 'External Email Rate', value: 'Very High', score: 30 },
-        { name: 'Attachment Downloads', value: 'Medium', score: 15 },
-        { name: 'Suspicious Link Clicks', value: 'High', score: 20 },
-        { name: 'Malware Detection History', value: 'Low', score: 11 },
-      ],
     },
     {
       id: 3,
       username: 'mike.johnson',
-      department: 'HR',
+
       riskScore: 62,
       riskLevel: 'Medium',
-      factors: [
-        { name: 'External Email Rate', value: 'Medium', score: 15 },
-        { name: 'Attachment Downloads', value: 'High', score: 20 },
-        { name: 'Suspicious Link Clicks', value: 'Medium', score: 15 },
-        { name: 'Malware Detection History', value: 'Low', score: 12 },
-      ],
     },
     {
       id: 4,
       username: 'lisa.wong',
-      department: 'Marketing',
+
       riskScore: 58,
       riskLevel: 'Medium',
-      factors: [
-        { name: 'External Email Rate', value: 'High', score: 25 },
-        { name: 'Attachment Downloads', value: 'Low', score: 10 },
-        { name: 'Suspicious Link Clicks', value: 'Medium', score: 15 },
-        { name: 'Malware Detection History', value: 'Very Low', score: 8 },
-      ],
     },
     {
       id: 5,
       username: 'david.miller',
-      department: 'Sales',
+
       riskScore: 45,
       riskLevel: 'Medium',
-      factors: [
-        { name: 'External Email Rate', value: 'Medium', score: 15 },
-        { name: 'Attachment Downloads', value: 'Medium', score: 15 },
-        { name: 'Suspicious Link Clicks', value: 'Low', score: 10 },
-        { name: 'Malware Detection History', value: 'Very Low', score: 5 },
-      ],
     },
     {
       id: 6,
       username: 'robert.chen',
-      department: 'IT',
+
       riskScore: 32,
       riskLevel: 'Low',
-      factors: [
-        { name: 'External Email Rate', value: 'Low', score: 10 },
-        { name: 'Attachment Downloads', value: 'Low', score: 10 },
-        { name: 'Suspicious Link Clicks', value: 'Very Low', score: 5 },
-        { name: 'Malware Detection History', value: 'Very Low', score: 7 },
-      ],
     },
     {
       id: 7,
       username: 'emma.davis',
-      department: 'Customer Support',
+
       riskScore: 28,
       riskLevel: 'Low',
-      factors: [
-        { name: 'External Email Rate', value: 'Medium', score: 15 },
-        { name: 'Attachment Downloads', value: 'Very Low', score: 5 },
-        { name: 'Suspicious Link Clicks', value: 'Very Low', score: 5 },
-        { name: 'Malware Detection History', value: 'Very Low', score: 3 },
-      ],
     },
   ];
 
-  const filteredUsers = users.filter(
-    (user) =>
-      user.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.department.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredUsers = users.filter((user) =>
+    user.username.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const getRiskClass = (risk) => {
@@ -261,24 +217,14 @@ export default function UserRiskScoresPage() {
                 >
                   User
                 </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-                >
-                  Department
-                </th>
+
                 <th
                   scope="col"
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
                 >
                   Risk Score
                 </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-                >
-                  Risk Factors
-                </th>
+
                 <th
                   scope="col"
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
@@ -321,9 +267,6 @@ export default function UserRiskScoresPage() {
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                      {user.department}
-                    </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div
                         className={`text-sm font-medium ${getScoreColor(
@@ -343,25 +286,6 @@ export default function UserRiskScoresPage() {
                           }`}
                           style={{ width: `${user.riskScore}%` }}
                         ></div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="text-sm space-y-1">
-                        {user.factors.map((factor, index) => (
-                          <div
-                            key={index}
-                            className="flex items-center justify-between"
-                          >
-                            <span className="text-gray-500 dark:text-gray-400">
-                              {factor.name}:
-                            </span>
-                            <span
-                              className={`ml-2 ${getValueClass(factor.value)}`}
-                            >
-                              {factor.value} ({factor.score})
-                            </span>
-                          </div>
-                        ))}
                       </div>
                     </td>
 

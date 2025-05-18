@@ -1,4 +1,4 @@
-import { AlertCircle } from 'lucide-react';
+import { AlertCircle, XCircle, CheckCircle } from 'lucide-react';
 import { useState } from 'react';
 import { ThreatSummary } from './ThreatSummary';
 
@@ -140,7 +140,7 @@ export default function Scannedemails({ email, onBack }) {
           <div className="p-6 border-b border-gray-200 dark:border-gray-700">
             <div className="flex items-center gap-2">
               <h2 className="text-lg font-medium">Email Analysis</h2>
-              {email?.isSafe ? (
+              {!email?.isSpam ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-5 w-5 text-green-500"
@@ -184,25 +184,39 @@ export default function Scannedemails({ email, onBack }) {
 
             <div className="pt-4">
               <div className="flex items-center justify-between mb-2">
-                <div className="text-sm font-medium">Security Score</div>
-                <div className="text-sm font-medium">{email?.score}/100</div>
+                <div className="text-sm font-medium">Classification</div>
               </div>
-              <div className="h-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                {/* <div
-                  className={`h-full ${
-                    email?.score > 70
-                      ? 'bg-green-500'
-                      : email?.score > 40
-                      ? 'bg-amber-500'
-                      : 'bg-red-500'
-                  }`}
-                  style={{ width: `${email?.score}%` }}
-                ></div> */}
-              </div>
-              <div className="flex justify-between mt-1">
-                <span className="text-xs text-red-500">High Risk</span>
-                <span className="text-xs text-amber-500">Medium Risk</span>
-                <span className="text-xs text-green-500">Low Risk</span>
+              <div className="flex items-center gap-3 p-4 rounded-lg border border-gray-200 dark:border-gray-700">
+                {email.isSpam ? (
+                  <>
+                    <div className="h-12 w-12 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
+                      <XCircle className="h-8 w-8 text-red-500 dark:text-red-400" />
+                    </div>
+                    <div>
+                      <div className="font-medium text-red-600 dark:text-red-400">
+                        Spam Detected
+                      </div>
+                      <div className="text-sm text-gray-500 dark:text-gray-400">
+                        This email has been classified as spam and may be
+                        harmful
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="h-12 w-12 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+                      <CheckCircle className="h-8 w-8 text-green-500 dark:text-green-400" />
+                    </div>
+                    <div>
+                      <div className="font-medium text-green-600 dark:text-green-400">
+                        Not Spam
+                      </div>
+                      <div className="text-sm text-gray-500 dark:text-gray-400">
+                        This email appears to be legitimate
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </div>

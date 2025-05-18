@@ -147,31 +147,47 @@ export default function InboxView() {
 
   const handleScanEmail = async (email) => {
     try {
-      const filename = email.attachments[0].filename;
-      if (!filename) throw new Error('No attachment found');
+      const emailShield = JSON.parse(localStorage.getItem('emailShield'));
+      if (!emailShield.access_token) throw new Error('User not authenticated');
 
-      const token = localStorage.getItem('token');
+      // Step 1: Check for spam
+      const spamResponse = await fetch('http://localhost:8000/check_spam', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${emailShield.access_token}`,
+        },
+        body: JSON.stringify({ text: email.raw_body }),
+      });
 
-      const response = await fetch(
-        `http://localhost:8000/predict?filename=${filename}`,
-        {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      if (!spamResponse.ok) throw new Error('Error checking for spam');
+      const spamResult = await spamResponse.json();
+      const isSpam = spamResult.spam;
 
-      if (!response.ok) throw new Error('Error scanning the file');
+      // Store the spam check result
+      const scanResult = { ...email, isSpam };
 
-      const result = await response.json();
+      // Step 2: Only check for malware if attachment exists
+      const filename = email.attachments?.[0]?.filename;
+      if (filename) {
+        const predictResponse = await fetch(
+          `http://localhost:8000/predict?filename=${filename}`,
+          {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${emailShield.access_token}`,
+            },
+          }
+        );
 
-      const scanResult = { ...email, malwareDetails: result };
+        if (!predictResponse.ok) throw new Error('Error scanning the file');
+        const malwareDetails = await predictResponse.json();
+        scanResult.malwareDetails = malwareDetails;
+      }
 
       console.log(scanResult);
 
       setScanResults(scanResult);
-
       setShowScannedScreen(true);
     } catch (error) {
       console.error('Error scanning email:', error);
@@ -236,7 +252,7 @@ export default function InboxView() {
                 {isLoading ? (
                   <div className="flex justify-center items-center w-full h-full flex-col gap-4">
                     <div
-                      class="animate-spin inline-block size-6 border-3 border-current border-t-transparent text-blue-600 rounded-full dark:text-blue-500"
+                      className="animate-spin inline-block size-6 border-3 border-current border-t-transparent text-blue-600 rounded-full dark:text-blue-500"
                       role="status"
                       aria-label="loading"
                     >
@@ -302,6 +318,7 @@ export default function InboxView() {
                             <div
                               className="bg-gray-200 px-2 py-1 rounded-full text-gray-600"
                               style={{ fontSize: '0.65rem' }}
+                              key={attachment.filename}
                             >
                               {attachment.filename}
                             </div>
@@ -356,7 +373,12 @@ export default function InboxView() {
           </div>
         </div>
       )}
-      {showScanedScreen && <ScanResults email={scanResults} />}
+      {showScanedScreen && (
+        <ScanResults
+          email={scanResults}
+          onBack={() => setShowScannedScreen(false)}
+        />
+      )}
     </>
   );
 }

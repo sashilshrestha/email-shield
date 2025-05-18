@@ -1,12 +1,22 @@
-import { AlertTriangle, Shield, Activity, CheckCircle } from 'lucide-react';
+import {
+  AlertTriangle,
+  Shield,
+  Activity,
+  CheckCircle,
+  FileX,
+} from 'lucide-react';
+import { useEffect } from 'react';
 
 export function ThreatSummary({ scanResult }) {
+  useEffect(() => {
+    console.log(scanResult);
+  }, []);
   // Remove duplicate entries from arrays
-  const uniqueBehaviors = [...new Set(scanResult.behaviour)];
-  const uniqueRemedies = [...new Set(scanResult.remedy)];
+  const uniqueBehaviors = [...new Set(scanResult?.behaviour)];
+  const uniqueRemedies = [...new Set(scanResult?.remedy)];
 
   // Format confidence as percentage
-  const confidencePercentage = Math.round(scanResult.confidence * 100);
+  const confidencePercentage = Math.round(scanResult?.confidence * 100);
 
   // Determine severity level based on confidence
   const getSeverityLevel = (confidence) => {
@@ -16,7 +26,7 @@ export function ThreatSummary({ scanResult }) {
     return 'Low';
   };
 
-  const severityLevel = getSeverityLevel(scanResult.confidence);
+  const severityLevel = getSeverityLevel(scanResult?.confidence);
 
   // Get appropriate color classes based on severity
   const getSeverityColorClass = (severity) => {
@@ -36,8 +46,9 @@ export function ThreatSummary({ scanResult }) {
 
   const severityColorClass = getSeverityColorClass(severityLevel);
 
-  return (
+  return scanResult ? (
     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
+      {' '}
       <div className="p-6 border-b border-gray-200 dark:border-gray-700">
         <div className="flex items-center justify-between">
           <div>
@@ -54,7 +65,6 @@ export function ThreatSummary({ scanResult }) {
           </div>
         </div>
       </div>
-
       <div className="p-6 space-y-6">
         {/* Confidence meter */}
         <div>
@@ -113,6 +123,32 @@ export function ThreatSummary({ scanResult }) {
               </li>
             ))}
           </ul>
+        </div>
+      </div>
+    </div>
+  ) : (
+    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col">
+      <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-lg font-medium">Threat Summary</h2>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 invisible">
+              Detailed analysis of the scanned email
+            </p>
+          </div>
+        </div>
+      </div>
+      <div className="flex-1 items-center justify-center flex">
+        <div className="flex flex-col items-center justify-center text-center p-8">
+          <div className="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center mb-3">
+            <FileX className="h-6 w-6 text-gray-500 dark:text-gray-400" />
+          </div>
+          <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-1">
+            No Attachments Found
+          </h3>
+          <p className="text-sm text-gray-500 dark:text-gray-400 max-w-md">
+            This email does not contain any file attachments to analyze.
+          </p>
         </div>
       </div>
     </div>

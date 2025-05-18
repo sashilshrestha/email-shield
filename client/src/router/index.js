@@ -14,9 +14,14 @@ import SecurityPoliciesPage from '../pages/SecurityPoliciesPage';
 import UserReportsPage from '../pages/UserReportsPage';
 
 export const router = createBrowserRouter([
+  { path: 'login', Component: LoginPage },
+  { path: '/settings', Component: SettingsPage }, 
   {
     path: '',
     Component: ProtectedRoute,
+    loader: async () => {
+      return { allowedRole: 'user' };
+    },
     children: [
       {
         path: '',
@@ -29,13 +34,14 @@ export const router = createBrowserRouter([
           // { path: 'settings', Component: SettingsPage },
         ],
       },
-      // { path: 'login', Component: LoginPage },
     ],
   },
-  { path: 'login', Component: LoginPage },
   {
     path: 'admin',
     Component: ProtectedRoute,
+    loader: async () => {
+      return { allowedRole: 'admin' };
+    },
     children: [
       {
         path: '',
@@ -49,6 +55,4 @@ export const router = createBrowserRouter([
       // { path: 'login', Component: LoginPage },
     ],
   },
-
-  { path: '/settings', Component: SettingsPage },
 ]);

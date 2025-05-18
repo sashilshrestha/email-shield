@@ -73,8 +73,7 @@ export default function LoginPage() {
 
       const data = await response.json();
 
-      const { access_token } = data;
-      localStorage.setItem('token', access_token);
+      localStorage.setItem('emailShield', JSON.stringify(data));
 
       navigate('/');
     } catch (error) {

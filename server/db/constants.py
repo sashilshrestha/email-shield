@@ -3,22 +3,50 @@ APPLICATION_USERS = {
         "role": "admin",
         "first_name": "System",
         "last_name": "Admin",
-        "email": "admin@defendxpert.com",
+        "email": "admin@emailshield.com",
         "password_hash": "scrypt:32768:8:1$B6vHNwH5DvyBg3zg$6d1cd169b75d91b9637d384953956a215821b1d57c348aeba03089a6a70261b57842bd979e73214c91d0c8343a720c667a82f121b24da270619507ea3f23a91b"
     },
     2: {
         "role": "user",
         "first_name": "Bina",
         "last_name": "Kandel",
-        "email": "bina.kandel@defendxpert.com",
+        "email": "bina.kandel@emailshield.com",
         "password_hash": "scrypt:32768:8:1$sm2z0YuiVYaDPx56$d8e144a130b5402a8f2f48a9137aea46c7f3b7e42762327c916b5e77a918251ed672d8a427339c550f127871f8e4b3e8df9ac4c78bafb5def10ec059994c234c"
     },
     3: {
         "role": "user",
         "first_name": "Sashil",
         "last_name": "Shrestha",
-        "email": "sashil.shrestha@defendxpert.com",
+        "email": "sashil.shrestha@emailshield.com",
         "password_hash": "scrypt:32768:8:1$AJOOmjoCZYEV3y5b$eed8e1bf64cb57bddc44ac9906ecc1338a98d70f5d1e977d9969c1ba87934e7c0e39bf2c302bd55de9741dd4d3278f7b3fe76378d12625ae59b5b8c7a8704dae"
+    },
+    4: {
+        "role": "user",
+        "first_name": "Radu",
+        "last_name": "Cojocaru",
+        "email": "radu.cojocaru@emailshield.com",
+        "password_hash": "scrypt:32768:8:1$A3prgZIWb2gy5XSD$ba64dd3c797840aaf4f8f4c6ca102f3d04e84e697f9b6800e0671452d94541206674662b11b6d71a9972f38aaf27f89ba8cba62c1b097686a2294d7624f7cb19"
+    },
+    5: {
+        "role": "user",
+        "first_name": "Owais",
+        "last_name": "Saeed",
+        "email": "owais.saeed@emailshield.com",
+        "password_hash": "scrypt:32768:8:1$Dml81qmJv1sWUoSc$acf87b45aba00bda860c5d857c2b3d75a47b007e91b4d44bf7ad0f7d1b3422e30555464b0adde6460e7d62f41319af3c4680aa87f3a763ce234612b96e87a9d8"
+    },
+    6: {
+        "role": "user",
+        "first_name": "Noarin",
+        "last_name": "Panjwani",
+        "email": "noarin.panjwani@emailshield.com",
+        "password_hash": "scrypt:32768:8:1$FUaSLHrQ6M0yCS2r$ba6cc4c2341f155cdbe7a2b569154050bd440f0a6f26c001f71ef55bf9651835812af2b7924aaa2d819cb7dc34ee559cb2166c5fcffa253ac25d2970c0397313"
+    },
+    7: {
+        "role": "user",
+        "first_name": "Jermy",
+        "last_name": "Johnson",
+        "email": "jermy.johnson@emailshield.com",
+        "password_hash": "scrypt:32768:8:1$FFpcE5aVLkOEP4BK$aa491703f431019fe0377b0c905df67bec351bec7c8e483022794597a8bf90364beb191832e3496f518ff44fe01e264f3562810db991e98d57c3790294058aa1"
     }
 }
 
@@ -824,4 +852,679 @@ MALWARE_DETAILS = {
             "Restore system if infection persists"
         ],
     },
+}
+
+# malware_class 24 = benign
+SCAN_HISTORY = {
+    # user_id = 2
+    1:{
+        "user_id":2,
+        "file_name":"001b262b87355ca18c84822793dc3e82.png",
+        "file_size_bytes": 97758,
+        "file_created": "2025-05-18T22:10:32",
+        "malware_class":24,
+        "confidence_score":0.56,
+        "timestamp":"2025-05-15T22:10:32"
+    },
+    2:{
+        "user_id":2,
+        "file_name":"001b262b87355ca18c84822793dc3e82.png",
+        "file_size_bytes": 97758,
+        "file_created": "2025-05-18T22:10:32",
+        "malware_class":24,
+        "confidence_score":0.61,
+        "timestamp":"2025-05-15T22:10:32"
+    },
+    3:{
+        "user_id":2,
+        "file_name":"001b262b87355ca18c84822793dc3e82.png",
+        "file_size_bytes": 97758,
+        "file_created": "2025-05-18T22:10:32",
+        "malware_class":24,
+        "confidence_score":0.31,
+        "timestamp":"2025-05-16T22:10:32"
+    },
+    4:{
+        "user_id":2,
+        "file_name":"001b262b87355ca18c84822793dc3e82.png",
+        "file_size_bytes": 97758,
+        "file_created": "2025-05-18T22:10:32",
+        "malware_class":13,
+        "confidence_score":0.4,
+        "timestamp":"2025-05-16T22:10:32"
+    },
+    5:{
+        "user_id":2,
+        "file_name":"001b262b87355ca18c84822793dc3e82.png",
+        "file_size_bytes": 97758,
+        "file_created": "2025-05-18T22:10:32",
+        "malware_class":24,
+        "confidence_score":0.9873,
+        "timestamp":"2025-05-16T22:10:32"
+    },
+    6:{
+        "user_id":2,
+        "file_name":"001b262b87355ca18c84822793dc3e82.png",
+        "file_size_bytes": 97758,
+        "file_created": "2025-05-18T22:10:32",
+        "malware_class":14,
+        "confidence_score":0.6,
+        "timestamp":"2025-05-17T22:10:32"
+    },
+    7:{
+        "user_id":2,
+        "file_name":"001b262b87355ca18c84822793dc3e82.png",
+        "file_size_bytes": 97758,
+        "file_created": "2025-05-18T22:10:32",
+        "malware_class":24,
+        "confidence_score":0.88,
+        "timestamp":"2025-05-17T22:10:32"
+    },
+    8:{
+        "user_id":2,
+        "file_name":"001b262b87355ca18c84822793dc3e82.png",
+        "file_size_bytes": 97758,
+        "file_created": "2025-05-18T22:10:32",
+        "malware_class":16,
+        "confidence_score":0.5,
+        "timestamp":"2025-05-18T22:10:32"
+    },
+    9:{
+        "user_id":2,
+        "file_name":"001b262b87355ca18c84822793dc3e82.png",
+        "file_size_bytes": 97758,
+        "file_created": "2025-05-18T22:10:32",
+        "malware_class":24,
+        "confidence_score":0.8921,
+        "timestamp":"2025-05-18T22:10:32"
+    },
+    10:{
+        "user_id":2,
+        "file_name":"001b262b87355ca18c84822793dc3e82.png",
+        "file_size_bytes": 97758,
+        "file_created": "2025-05-18T22:10:32",
+        "malware_class":24,
+        "confidence_score":0.65,
+        "timestamp":"2025-05-18T22:10:32"
+    },
+    
+
+    # user_id = 3
+    11:{
+        "user_id":3,
+        "file_name":"001b262b87355ca18c84822793dc3e82.png",
+        "file_size_bytes": 97758,
+        "file_created": "2025-05-18T22:10:32",
+        "malware_class": 24, 
+        "confidence_score":0.9873,
+        "timestamp":"2025-05-14T22:10:32"
+    },
+    12:{
+        "user_id":3,
+        "file_name":"001b262b87355ca18c84822793dc3e82.png",
+        "file_size_bytes": 97758,
+        "file_created": "2025-05-18T22:10:32",
+        "malware_class": 24,
+        "confidence_score":0.956,
+        "timestamp":"2025-05-15T22:10:32"
+    },
+    13:{
+        "user_id":3,
+        "file_name":"001b262b87355ca18c84822793dc3e82.png",
+        "file_size_bytes": 97758,
+        "file_created": "2025-05-18T22:10:32",
+        "malware_class": 3,
+        "confidence_score":0.78,
+        "timestamp":"2025-05-15T22:10:32"
+    },
+    14:{
+        "user_id":3,
+        "file_name":"001b262b87355ca18c848227093dc3e82.png",
+        "file_size_bytes": 97758,
+        "file_created": "2025-05-18T22:10:32",
+        "malware_class":10,
+        "confidence_score":0.889,
+        "timestamp":"2025-05-16T22:10:32"
+    },
+    15:{
+        "user_id":3,
+        "file_name":"001b262b87355ca18c84822793dc3e82.png",
+        "file_size_bytes": 97758,
+        "file_created": "2025-05-18T22:10:32",
+        "malware_class":6,
+        "confidence_score":0.60,
+        "timestamp":"2025-05-16T22:10:32"
+    },
+    16:{
+        "user_id":3,
+        "file_name":"001b262b87355ca18c84822793dc3e82.png",
+        "file_size_bytes": 97758,
+        "file_created": "2025-05-18T22:10:32",
+        "malware_class": 7,
+        "confidence_score":0.889,
+        "timestamp":"2025-05-17T22:10:32"
+    },
+    17:{
+        "user_id":3,
+        "file_name":"001b262b87355ca18c84822793dc3e82.png",
+        "file_size_bytes": 97758,
+        "file_created": "2025-05-18T22:10:32",
+        "malware_class": 5,
+        "confidence_score":0.587,
+        "timestamp":"2025-05-17T22:10:32"
+    },
+    18:{
+        "user_id":3,
+        "file_name":"001b262b87355ca18c84822793dc3e82.png",
+        "file_size_bytes": 97758,
+        "file_created": "2025-05-18T22:10:32",
+        "malware_class":9,
+        "confidence_score":0.672,
+        "timestamp":"2025-05-18T22:10:32"
+    },
+    19:{
+        "user_id":3,
+        "file_name":"001b262b87355ca18c84822793dc3e82.png",
+        "file_size_bytes": 97758,
+        "file_created": "2025-05-18T22:10:32",
+        "malware_class":24,
+        "confidence_score":0.994,
+        "timestamp":"2025-05-18T22:10:32"
+    },
+    20:{
+        "user_id":3,
+        "file_name":"001b262b87355ca18c84822793dc3e82.png",
+        "file_size_bytes": 97758,
+        "file_created": "2025-05-18T22:10:32",
+        "malware_class":24,
+        "confidence_score":0.851,
+        "timestamp":"2025-05-18T22:10:32"
+    },
+
+    
+    # user_id = 4
+    "21": {
+    "user_id": 4,
+    "file_name": "b374f1c9a4f93e83b3d7bc3184e47d91.png",
+    "file_size_bytes": 81234,
+    "file_created": "2025-05-11T10:23:18",
+    "malware_class": 14,
+    "confidence_score": 0.885,
+    "timestamp": "2025-05-11T10:23:18"
+    },
+    "22": {
+    "user_id": 4,
+    "file_name": "7c98dd19e271456cbd68c77664e7fc51.png",
+    "file_size_bytes": 122093,
+    "file_created": "2025-05-14T03:45:12",
+    "malware_class": 7,
+    "confidence_score": 0.691,
+    "timestamp": "2025-05-14T03:45:12"
+    },
+    "23": {
+    "user_id": 4,
+    "file_name": "40a013a2642f4f19bdf6fa1657df9b6f.png",
+    "file_size_bytes": 95482,
+    "file_created": "2025-05-18T20:32:47",
+    "malware_class": 24,
+    "confidence_score": 0.961,
+    "timestamp": "2025-05-18T20:32:47"
+    },
+    "24": {
+    "user_id": 4,
+    "file_name": "f4f7aa6b4f5a4b27b4cde5e6e9c84df3.png",
+    "file_size_bytes": 87345,
+    "file_created": "2025-05-10T08:14:53",
+    "malware_class": 3,
+    "confidence_score": 0.788,
+    "timestamp": "2025-05-10T08:14:53"
+    },
+    "25": {
+    "user_id": 4,
+    "file_name": "1b845c60adbd401d8a9ffb8a19fdf99a.png",
+    "file_size_bytes": 105689,
+    "file_created": "2025-05-12T16:05:22",
+    "malware_class": 0,
+    "confidence_score": 0.631,
+    "timestamp": "2025-05-12T16:05:22"
+    },
+    "26": {
+    "user_id": 4,
+    "file_name": "cd32730f93a24176ae1210c6fc5a3f21.png",
+    "file_size_bytes": 89321,
+    "file_created": "2025-05-17T11:49:31",
+    "malware_class": 24,
+    "confidence_score": 0.952,
+    "timestamp": "2025-05-17T11:49:31"
+    },
+    "27": {
+    "user_id": 4,
+    "file_name": "3d1c5cb3aa22426fb74f924a4d2d7c65.png",
+    "file_size_bytes": 74321,
+    "file_created": "2025-05-13T07:34:01",
+    "malware_class": 18,
+    "confidence_score": 0.711,
+    "timestamp": "2025-05-13T07:34:01"
+    },
+    "28": {
+    "user_id": 4,
+    "file_name": "be7b9b66f6d8432a924b9d00cc021e60.png",
+    "file_size_bytes": 116743,
+    "file_created": "2025-05-15T22:27:39",
+    "malware_class": 24,
+    "confidence_score": 0.875,
+    "timestamp": "2025-05-15T22:27:39"
+    },
+    "29": {
+    "user_id": 4,
+    "file_name": "d5a94e91b0cf4d1f8a15f7fce69dcd2f.png",
+    "file_size_bytes": 98523,
+    "file_created": "2025-05-11T14:40:29",
+    "malware_class": 2,
+    "confidence_score": 0.645,
+    "timestamp": "2025-05-11T14:40:29"
+    },
+    "30": {
+    "user_id": 4,
+    "file_name": "f7b231ec2dcd49838b9b285ab15ef1f6.png",
+    "file_size_bytes": 101387,
+    "file_created": "2025-05-19T06:12:11",
+    "malware_class": 5,
+    "confidence_score": 0.922,
+    "timestamp": "2025-05-19T06:12:11"
+    },
+    "31": {
+    "user_id": 4,
+    "file_name": "a1f5eb21e14f4298bb95f59e8ddda6e4.png",
+    "file_size_bytes": 76489,
+    "file_created": "2025-05-10T20:54:42",
+    "malware_class": 12,
+    "confidence_score": 0.803,
+    "timestamp": "2025-05-10T20:54:42"
+    },
+    "32": {
+    "user_id": 4,
+    "file_name": "e2dc47fb74244cd7a29193a91f6a7f82.png",
+    "file_size_bytes": 93672,
+    "file_created": "2025-05-16T18:39:54",
+    "malware_class": 24,
+    "confidence_score": 0.989,
+    "timestamp": "2025-05-16T18:39:54"
+    },
+
+    # user_id = 5
+    "33": {
+    "user_id": 5,
+    "file_name": "5f79bcf3f56c4f9b8267994b5e6c65f1.png",
+    "file_size_bytes": 89734,
+    "file_created": "2025-05-10T09:25:44",
+    "malware_class": 6,
+    "confidence_score": 0.732,
+    "timestamp": "2025-05-10T09:25:44"
+    },
+    "34": {
+    "user_id": 5,
+    "file_name": "bd7286ea0e644dc2962fa8428bcb77b5.png",
+    "file_size_bytes": 105223,
+    "file_created": "2025-05-11T18:32:17",
+    "malware_class": 20,
+    "confidence_score": 0.889,
+    "timestamp": "2025-05-11T18:32:17"
+    },
+    "35": {
+    "user_id": 5,
+    "file_name": "f07e236cfe4f407f8eb1c2ad9c51d3f9.png",
+    "file_size_bytes": 97345,
+    "file_created": "2025-05-14T12:07:39",
+    "malware_class": 1,
+    "confidence_score": 0.648,
+    "timestamp": "2025-05-14T12:07:39"
+    },
+    "36": {
+    "user_id": 5,
+    "file_name": "4377ffbd215f4c148b03c6d4efb9fa5a.png",
+    "file_size_bytes": 86321,
+    "file_created": "2025-05-17T08:56:03",
+    "malware_class": 11,
+    "confidence_score": 0.954,
+    "timestamp": "2025-05-17T08:56:03"
+    },
+    "37": {
+    "user_id": 5,
+    "file_name": "ea84e93d69e441249b90b7adcc75b474.png",
+    "file_size_bytes": 99984,
+    "file_created": "2025-05-13T17:12:44",
+    "malware_class": 23,
+    "confidence_score": 0.768,
+    "timestamp": "2025-05-13T17:12:44"
+    },
+    "38": {
+    "user_id": 5,
+    "file_name": "92ae7a3797b540bda24887e5dcd760ac.png",
+    "file_size_bytes": 113772,
+    "file_created": "2025-05-19T05:15:32",
+    "malware_class": 8,
+    "confidence_score": 0.967,
+    "timestamp": "2025-05-19T05:15:32"
+    },
+    "39": {
+    "user_id": 5,
+    "file_name": "4c0a392b5e7b4c5eb4b03a1f23cf4d94.png",
+    "file_size_bytes": 78214,
+    "file_created": "2025-05-10T14:27:50",
+    "malware_class": 4,
+    "confidence_score": 0.819,
+    "timestamp": "2025-05-10T14:27:50"
+    },
+    "40": {
+    "user_id": 5,
+    "file_name": "d107c1f61d734487a0a9dcdbcefb3875.png",
+    "file_size_bytes": 100324,
+    "file_created": "2025-05-15T19:46:21",
+    "malware_class": 17,
+    "confidence_score": 0.935,
+    "timestamp": "2025-05-15T19:46:21"
+    },
+    "41": {
+    "user_id": 5,
+    "file_name": "c8d72e37a3274e62a6e03de8dcd276d3.png",
+    "file_size_bytes": 109785,
+    "file_created": "2025-05-16T23:02:10",
+    "malware_class": 13,
+    "confidence_score": 0.871,
+    "timestamp": "2025-05-16T23:02:10"
+    },
+    "42": {
+    "user_id": 5,
+    "file_name": "6be57865b0864a9da39a7cbe623a07e9.png",
+    "file_size_bytes": 84397,
+    "file_created": "2025-05-18T09:50:33",
+    "malware_class": 9,
+    "confidence_score": 0.684,
+    "timestamp": "2025-05-18T09:50:33"
+    },
+    "43": {
+    "user_id": 5,
+    "file_name": "ab30261f5e024cbfb2d7d8c1b5118a32.png",
+    "file_size_bytes": 103298,
+    "file_created": "2025-05-12T21:38:08",
+    "malware_class": 0,
+    "confidence_score": 0.601,
+    "timestamp": "2025-05-12T21:38:08"
+    },
+    "44": {
+    "user_id": 5,
+    "file_name": "e99f3f4e51584cd7a31a6c7d3c871f24.png",
+    "file_size_bytes": 95784,
+    "file_created": "2025-05-14T06:40:29",
+    "malware_class": 16,
+    "confidence_score": 0.923,
+    "timestamp": "2025-05-14T06:40:29"
+    },
+    "45": {
+    "user_id": 5,
+    "file_name": "bc663d81c50b4c7ab0c302cfbfc1142e.png",
+    "file_size_bytes": 89932,
+    "file_created": "2025-05-11T03:12:00",
+    "malware_class": 24,
+    "confidence_score": 0.711,
+    "timestamp": "2025-05-11T03:12:00"
+    },
+
+    # user_id = 6
+    "46": {
+    "user_id": 6,
+    "file_name": "0d6c18f74f054527a3cda7d65a1bc22b.png",
+    "file_size_bytes": 104732,
+    "file_created": "2025-05-12T10:04:37",
+    "malware_class": 4,
+    "confidence_score": 0.965,
+    "timestamp": "2025-05-12T10:04:37"
+    },
+    "47": {
+    "user_id": 6,
+    "file_name": "30a1f6c4e1f44e7ba45c1d17133c49fc.png",
+    "file_size_bytes": 112398,
+    "file_created": "2025-05-14T13:26:59",
+    "malware_class": 17,
+    "confidence_score": 0.972,
+    "timestamp": "2025-05-14T13:26:59"
+    },
+    "48": {
+    "user_id": 6,
+    "file_name": "ec9a9a7a3d8b41e3b319e6ae2a6b184f.png",
+    "file_size_bytes": 98201,
+    "file_created": "2025-05-16T18:49:23",
+    "malware_class": 6,
+    "confidence_score": 0.943,
+    "timestamp": "2025-05-16T18:49:23"
+    },
+    "49": {
+    "user_id": 6,
+    "file_name": "adc1cb83e5c040d495ef5e61f7cba558.png",
+    "file_size_bytes": 87842,
+    "file_created": "2025-05-11T05:44:10",
+    "malware_class": 24,
+    "confidence_score": 0.989,
+    "timestamp": "2025-05-11T05:44:10"
+    },
+    "50": {
+    "user_id": 6,
+    "file_name": "b4d7cbaebff64917929074aeab7ae529.png",
+    "file_size_bytes": 107512,
+    "file_created": "2025-05-13T22:33:41",
+    "malware_class": 8,
+    "confidence_score": 0.915,
+    "timestamp": "2025-05-13T22:33:41"
+    },
+    "51": {
+    "user_id": 6,
+    "file_name": "998f2297d3874d83a38e7ecb3fcfe379.png",
+    "file_size_bytes": 92384,
+    "file_created": "2025-05-17T01:20:09",
+    "malware_class": 3,
+    "confidence_score": 0.931,
+    "timestamp": "2025-05-17T01:20:09"
+    },
+    "52": {
+    "user_id": 6,
+    "file_name": "5e22115b8c8f4ec08e15c89120b59f90.png",
+    "file_size_bytes": 100238,
+    "file_created": "2025-05-18T07:12:48",
+    "malware_class": 14,
+    "confidence_score": 0.901,
+    "timestamp": "2025-05-18T07:12:48"
+    },
+    "53": {
+    "user_id": 6,
+    "file_name": "b7a5bc79a7614a43b41c7ccf563fc330.png",
+    "file_size_bytes": 115724,
+    "file_created": "2025-05-10T12:57:22",
+    "malware_class": 0,
+    "confidence_score": 0.986,
+    "timestamp": "2025-05-10T12:57:22"
+    },
+    "54": {
+    "user_id": 6,
+    "file_name": "774b4dd089d246e6a472a3b7b74c5cc7.png",
+    "file_size_bytes": 84736,
+    "file_created": "2025-05-15T04:45:36",
+    "malware_class": 19,
+    "confidence_score": 0.938,
+    "timestamp": "2025-05-15T04:45:36"
+    },
+    "55": {
+    "user_id": 6,
+    "file_name": "3ad1b5f5537342ad8dd1f8a760ab58fa.png",
+    "file_size_bytes": 97742,
+    "file_created": "2025-05-19T09:19:03",
+    "malware_class": 22,
+    "confidence_score": 0.993,
+    "timestamp": "2025-05-19T09:19:03"
+    },
+    "56": {
+    "user_id": 6,
+    "file_name": "cb87edfc60f74d30a7199b6f6cdd8d7c.png",
+    "file_size_bytes": 96833,
+    "file_created": "2025-05-10T19:11:59",
+    "malware_class": 9,
+    "confidence_score": 0.919,
+    "timestamp": "2025-05-10T19:11:59"
+    },
+    "57": {
+    "user_id": 6,
+    "file_name": "d60c5b0e47a54ccba6c509bbd2e7c9ed.png",
+    "file_size_bytes": 102456,
+    "file_created": "2025-05-13T03:50:17",
+    "malware_class": 15,
+    "confidence_score": 0.978,
+    "timestamp": "2025-05-13T03:50:17"
+    },
+    "58": {
+    "user_id": 6,
+    "file_name": "faa8c9ff8b594263b9a9e6a2993db51f.png",
+    "file_size_bytes": 101392,
+    "file_created": "2025-05-12T16:02:29",
+    "malware_class": 12,
+    "confidence_score": 0.941,
+    "timestamp": "2025-05-12T16:02:29"
+    },
+
+    # user_id = 7
+    "59": {
+    "user_id": 7,
+    "file_name": "3fb4021fca8b4a8a985d882486b87925.png",
+    "file_size_bytes": 93372,
+    "file_created": "2025-05-11T07:22:11",
+    "malware_class": 5,
+    "confidence_score": 0.867,
+    "timestamp": "2025-05-11T07:22:11"
+    },
+    "60": {
+    "user_id": 7,
+    "file_name": "f0db4b59a2b2411abbd61231a84eb3f6.png",
+    "file_size_bytes": 98763,
+    "file_created": "2025-05-13T08:59:44",
+    "malware_class": 16,
+    "confidence_score": 0.435,
+    "timestamp": "2025-05-13T08:59:44"
+    },
+    "61": {
+    "user_id": 7,
+    "file_name": "0f44284978b847689b65c6c013e5741f.png",
+    "file_size_bytes": 111902,
+    "file_created": "2025-05-14T16:41:33",
+    "malware_class": 3,
+    "confidence_score": 0.722,
+    "timestamp": "2025-05-14T16:41:33"
+    },
+    "62": {
+    "user_id": 7,
+    "file_name": "ab84778a9cb448c29ad7e1723df403a5.png",
+    "file_size_bytes": 105003,
+    "file_created": "2025-05-12T12:50:00",
+    "malware_class": 0,
+    "confidence_score": 0.361,
+    "timestamp": "2025-05-12T12:50:00"
+    },
+    "63": {
+    "user_id": 7,
+    "file_name": "ea9e5ac8bcf14c7db3d18038fd60f90e.png",
+    "file_size_bytes": 84355,
+    "file_created": "2025-05-15T21:15:39",
+    "malware_class": 21,
+    "confidence_score": 0.704,
+    "timestamp": "2025-05-15T21:15:39"
+    },
+    "64": {
+    "user_id": 7,
+    "file_name": "7c1d90a7904d46aab998388c827acbe2.png",
+    "file_size_bytes": 96412,
+    "file_created": "2025-05-10T06:38:49",
+    "malware_class": 10,
+    "confidence_score": 0.595,
+    "timestamp": "2025-05-10T06:38:49"
+    },
+    "65": {
+    "user_id": 7,
+    "file_name": "8d173aa3f77a4191919de3b94f1edc79.png",
+    "file_size_bytes": 88921,
+    "file_created": "2025-05-16T13:28:11",
+    "malware_class": 8,
+    "confidence_score": 0.888,
+    "timestamp": "2025-05-16T13:28:11"
+    },
+    "66": {
+    "user_id": 7,
+    "file_name": "57a5bd1145c44b80a81f1ebc8bda15d3.png",
+    "file_size_bytes": 107893,
+    "file_created": "2025-05-17T02:34:25",
+    "malware_class": 24,
+    "confidence_score": 0.832,
+    "timestamp": "2025-05-17T02:34:25"
+    },
+    "67": {
+    "user_id": 7,
+    "file_name": "b0db4b0e3e4c4384ad8bba7dd56dc948.png",
+    "file_size_bytes": 94520,
+    "file_created": "2025-05-11T18:09:38",
+    "malware_class": 13,
+    "confidence_score": 0.467,
+    "timestamp": "2025-05-11T18:09:38"
+    },
+    "68": {
+    "user_id": 7,
+    "file_name": "c784e07d747e4ed3bbd3c2a35c6d364b.png",
+    "file_size_bytes": 101984,
+    "file_created": "2025-05-18T23:17:45",
+    "malware_class": 12,
+    "confidence_score": 0.879,
+    "timestamp": "2025-05-18T23:17:45"
+    },
+    "69": {
+    "user_id": 7,
+    "file_name": "1cecf7c3a9294b66a6e580ebac0c0b66.png",
+    "file_size_bytes": 98112,
+    "file_created": "2025-05-10T22:44:30",
+    "malware_class": 1,
+    "confidence_score": 0.398,
+    "timestamp": "2025-05-10T22:44:30"
+    },
+    "70": {
+    "user_id": 7,
+    "file_name": "e3a8be9fc65e4e0bb6122d4be20610f4.png",
+    "file_size_bytes": 99453,
+    "file_created": "2025-05-13T15:05:01",
+    "malware_class": 6,
+    "confidence_score": 0.537,
+    "timestamp": "2025-05-13T15:05:01"
+    },
+    "71": {
+    "user_id": 7,
+    "file_name": "fde1cc5c212a4cd68b7c9f3bcad7c33e.png",
+    "file_size_bytes": 87004,
+    "file_created": "2025-05-12T04:23:16",
+    "malware_class": 19,
+    "confidence_score": 0.793,
+    "timestamp": "2025-05-12T04:23:16"
+    },
+    "72": {
+    "user_id": 7,
+    "file_name": "1d1932c1f2354a75a1ab166e19f13e32.png",
+    "file_size_bytes": 109324,
+    "file_created": "2025-05-19T11:55:54",
+    "malware_class": 24,
+    "confidence_score": 0.653,
+    "timestamp": "2025-05-19T11:55:54"
+    },
+    "73": {
+    "user_id": 7,
+    "file_name": "c88a28e8c08c4713a8b884f6d204d262.png",
+    "file_size_bytes": 108213,
+    "file_created": "2025-05-17T20:41:10",
+    "malware_class": 7,
+    "confidence_score": 0.711,
+    "timestamp": "2025-05-17T20:41:10"
+    }
+
 }

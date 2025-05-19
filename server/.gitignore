@@ -25,3 +25,5 @@ dist/
 # IDE/editor folders (optional, depending on your IDE)
 .idea/
 .vscode/
+db/EmailShield.db
+models/**

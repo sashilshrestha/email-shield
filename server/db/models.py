@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Text
+from sqlalchemy import Column, Integer, String, Text, BigInteger, Float, DateTime
 from .config import Base
 
 class User(Base):
@@ -20,3 +20,16 @@ class MalwareDetails(Base):
     malware_info =Column(Text, nullable=False) 
     behaviour =Column(Text, nullable=False) 
     remedy = Column(Text, nullable=False) 
+
+
+class ScanHistory(Base):
+    __tablename__ = 'scan_history'
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, nullable=False)
+    # full_name = Column(String(255), nullable=False)
+    file_name = Column(String(255), nullable=False)
+    file_size_bytes = Column(BigInteger, nullable=False)
+    file_created = Column(DateTime, nullable=False)
+    malware_class = Column(Integer, nullable=False)
+    confidence_score = Column(Float, nullable=False)
+    timestamp = Column(DateTime, nullable=False)

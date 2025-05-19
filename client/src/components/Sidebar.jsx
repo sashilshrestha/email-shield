@@ -13,11 +13,16 @@ export default function Sidebar({ currentView, isOpen, setIsOpen, isAdmin }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [isMobile, setIsMobile] = useState(false);
+  const [userDetails, setUserDetails] = useState({ email: '', name: '' });
 
   useEffect(() => {
     const checkIsMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
+
+    const { email, name } = JSON.parse(localStorage.getItem('emailShield'));
+
+    setUserDetails({ email, name });
 
     // Initial check
     checkIsMobile();
@@ -30,6 +35,11 @@ export default function Sidebar({ currentView, isOpen, setIsOpen, isAdmin }) {
       window.removeEventListener('resize', checkIsMobile);
     };
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('emailShield');
+    return navigate('/login');
+  };
 
   const clientMenuItems = [
     {
@@ -148,11 +158,14 @@ export default function Sidebar({ currentView, isOpen, setIsOpen, isAdmin }) {
               </svg>
             </div>
             <div className="text-left">
-              <div className="font-medium">John Doe</div>
-              <div className="text-xs text-gray-500 ">john@example.com</div>
+              <div className="font-medium">{userDetails?.name}</div>
+              <div className="text-xs text-gray-500 ">{userDetails?.email}</div>
             </div>
           </button>
-          <button className="flex items-center text-sm -gray-700 hover:bg-gray-100  rounded-full h-9 p-2 w-9 justify-center cursor-pointer">
+          <button
+            className="flex items-center text-sm -gray-700 hover:bg-gray-100  rounded-full h-9 p-2 w-9 justify-center cursor-pointer"
+            onClick={handleLogout}
+          >
             <LogOut color="grey" size={16} />
           </button>
         </div>

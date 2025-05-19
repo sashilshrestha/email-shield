@@ -132,7 +132,7 @@ export function ThreatSummary({ scanResult }) {
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-lg font-medium">Threat Summary</h2>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 invisible">
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 invisible">
               Detailed analysis of the scanned email
             </p>
           </div>

@@ -61,7 +61,25 @@ def login(user: UserLogin):
     if not auth_user:
         raise HTTPException(status_code=401, detail="Invalid email or password")
     token = create_access_token({"id": auth_user.id})
-    return {"access_token": token, "token_type": "bearer", "user_name":f"{auth_user.first_name} {auth_user.last_name}"}
+    return {"access_token": token, "token_type": "bearer", "role": auth_user.role, "name": f"{auth_user.first_name} {auth_user.last_name}".strip(), "email": auth_user.email}
+
+# @app.post("/predict")
+# def predict(file: UploadFile = File(...), user=Depends(get_current_user)):
+#     os.makedirs("output", exist_ok=True)
+#     file_path = f"output/{file.filename}"
+#     with open(file_path, "wb") as buffer:
+#         shutil.copyfileobj(file.file, buffer)
+
+#     predicted_class, confidence, details= predict_pe_image(file_path,scaler,pca,svm ,classes)
+
+#     return {
+#         "status":"ok", 
+#         "predicted_class":predicted_class,
+#         "confidence":confidence,
+#         "malware_info":details['malware_info'],
+#         "behaviour": details['behaviour'],
+#         "remedy":details['remedy']
+#         }
 
 @app.post("/predict")
 def predict(file: UploadFile = File(...), user=Depends(get_current_user)):

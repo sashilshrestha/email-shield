@@ -29,5 +29,5 @@ def get_overall_malware_details(malware_family: str, file_name: str):
 
 def generate_indices(input):
     random.seed(input)
-    numbers = [random.randint(1, 10) for _ in range(4)]
+    numbers = [random.randint(0, 9) for _ in range(4)]
     return numbers

@@ -46,7 +46,8 @@ export default function ProtectedRoute() {
   if (role !== mode.allowedRole) return <UnauthorizedPage />;
 
   // Redirect if the token doesn't exist
-  if (!tokenExists) return <Navigate to="/settings" replace />;
+  if (!tokenExists && mode.allowedRole === 'user')
+    return <Navigate to="/settings" replace />;
 
   // Render the protected content if the token exists
   return <Outlet />;

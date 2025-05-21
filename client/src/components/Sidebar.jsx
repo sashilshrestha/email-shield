@@ -159,7 +159,7 @@ export default function Sidebar({ currentView, isOpen, setIsOpen, isAdmin }) {
             </div>
             <div className="text-left">
               <div className="font-medium">{userDetails?.name}</div>
-              <div className="text-xs text-gray-500 ">{userDetails?.email}</div>
+              <div className="text-xs text-gray-500 truncate w-26">{userDetails?.email}</div>
             </div>
           </button>
           <button

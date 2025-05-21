@@ -74,8 +74,9 @@ export default function LoginPage() {
       const data = await response.json();
 
       localStorage.setItem('emailShield', JSON.stringify(data));
+      console.log(data);
 
-      navigate('/');
+      return data.role === 'admin' ? navigate('/admin') : navigate('/');
     } catch (error) {
       setErrors({
         form: error.message,

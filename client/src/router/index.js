@@ -15,7 +15,7 @@ import UserReportsPage from '../pages/UserReportsPage';
 
 export const router = createBrowserRouter([
   { path: 'login', Component: LoginPage },
-  { path: '/settings', Component: SettingsPage }, 
+  { path: '/settings', Component: SettingsPage },
   {
     path: '',
     Component: ProtectedRoute,
@@ -47,7 +47,10 @@ export const router = createBrowserRouter([
         path: '',
         Component: AdminLayout,
         children: [
-          { path: 'user-risk-scores', Component: UserRiskScoresPage },
+          {
+            path: 'user-risk-scores',
+            Component: UserRiskScoresPage,
+          },
           { path: 'security-policies', Component: SecurityPoliciesPage },
           { path: 'user-reports', Component: UserReportsPage },
         ],

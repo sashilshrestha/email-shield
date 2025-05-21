@@ -118,14 +118,16 @@ def login(user: UserLogin):
 #     }
 
 @app.post("/predict")
-def predict(file: UploadFile = File(...), user=Depends(get_current_user)):
-    
+def predict(filename: str, user=Depends(get_current_user)):    
     try:
+        attachments_dir = "attachments"
+        file_path = os.path.join(attachments_dir, filename)
+
+        # Check if the file exists
+        if not os.path.exists(file_path):
+            raise HTTPException(status_code=404, detail="File not found")
+
         user_id = user.get("id")
-        os.makedirs("output", exist_ok=True)
-        file_path = f"output/{file.filename}"
-        with open(file_path, "wb") as buffer:
-            shutil.copyfileobj(file.file, buffer)
 
         predicted_class, confidence, details, metadata = predict_pe_image(
             file_path,  scaler, pca, svm, classes, user_id
@@ -187,7 +189,7 @@ def test_endpoint(current_user=Depends(get_current_user)):
             "status": "error",
             "message": str(e)
         }
-        
+
 @app.get("/auth")
 def authenticate():
     """Redirect user to Google's OAuth 2.0 consent screen."""

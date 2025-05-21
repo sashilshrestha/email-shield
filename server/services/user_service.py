@@ -1,5 +1,5 @@
 from db.config import SessionLocal
-from db.models import User,ScanHistory
+from db.models import User,ScanHistory,MalwareDetails
 from utils.auth import hash_password, verify_password
 from utils.helper import getCurrentTimestamp
 from sqlalchemy import func, case
@@ -51,12 +51,35 @@ def get_user_scans(user_id:int):
                             ScanHistory.malware_class == 24,
                             ScanHistory.timestamp >= thirty_days_ago
                         ).scalar()
-    
+
+    # Join ScanHistory and malware_details to get counts per malware_family
+    results = (
+        db.query(
+            MalwareDetails.malware_family,
+            func.count(ScanHistory.id).label('count')
+        )
+        .join(MalwareDetails, MalwareDetails.id == ScanHistory.malware_class)
+        .filter(
+            ScanHistory.user_id == user_id,
+            ScanHistory.timestamp >= thirty_days_ago,
+            ScanHistory.malware_class != 24  # skip clean emails
+        )
+        .group_by(MalwareDetails.malware_family)
+        .all()
+    )
+
+    # return [{"malware_family": family, "count": count} for family, count in results]
     return {
-        "total_scans": total_count,
-        "clean_results": clean_count,
-        "malware_results": total_count - clean_count
+      "total_scans": total_count,
+      "clean_results": clean_count,
+      "malware_results": total_count - clean_count,
+      # "test": results,
+      "distribution": [
+          {"id": family, "label": family, "value": count}
+          for family, count in results
+      ]
     }
+
 
 
 def get_risk_scores():

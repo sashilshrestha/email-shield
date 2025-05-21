@@ -1,5 +1,5 @@
 {
-  "name": "emailshield-bootstrap",
+  "name": "emailshield",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@nivo/pie": "^0.98.0",
     "@tailwindcss/vite": "^4.1.5",
     "lucide-react": "^0.507.0",
     "react": "^19.0.0",
@@ -27,5 +28,6 @@
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
     "vite": "^6.3.1"
-  }
+  },
+  "proxy": "https://api.aispamcheck.com"
 }

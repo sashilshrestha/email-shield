@@ -1,97 +1,116 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Scan, ShieldPlus } from 'lucide-react';
+import { useNavigate } from 'react-router';
 import ScanResults from '../components/ScanedResults';
 
 // Mock email data
-const mockEmails = [
-  {
-    id: 1,
-    sender: 'security@company.com',
-    subject: 'Important Security Update',
-    preview:
-      'Please update your password immediately to ensure your account remains secure...',
-    date: '2023-05-04T10:30:00',
-    read: true,
-    hasAttachment: true,
-  },
-  {
-    id: 2,
-    sender: 'newsletter@tech-updates.com',
-    subject: 'Weekly Tech Newsletter',
-    preview:
-      'This week in tech: New AI developments, cybersecurity threats, and more...',
-    date: '2023-05-03T14:15:00',
-    read: false,
-    hasAttachment: false,
-  },
-  {
-    id: 3,
-    sender: 'support@suspicious-domain.net',
-    subject: 'Your Account Has Been Compromised',
-    preview:
-      'We have detected unusual activity on your account. Click here to verify...',
-    date: '2023-05-03T09:45:00',
-    read: false,
-    hasAttachment: true,
-  },
-  {
-    id: 4,
-    sender: 'hr@yourcompany.com',
-    subject: 'Monthly Team Update',
-    preview:
-      'Here are the updates from all departments for the month of May...',
-    date: '2023-05-02T16:20:00',
-    read: true,
-    hasAttachment: false,
-  },
-  {
-    id: 5,
-    sender: 'no-reply@banking.com',
-    subject: 'Transaction Alert',
-    preview: 'A transaction of $500 has been made from your account...',
-    date: '2023-05-02T11:10:00',
-    read: true,
-    hasAttachment: false,
-  },
-  {
-    id: 6,
-    sender: 'marketing@online-store.com',
-    subject: 'Special Discount Just For You!',
-    preview:
-      "As a valued customer, we're offering you an exclusive 50% discount...",
-    date: '2023-05-01T13:25:00',
-    read: false,
-    hasAttachment: false,
-  },
-  {
-    id: 7,
-    sender: 'notifications@social-network.com',
-    subject: 'New Connection Request',
-    preview: 'You have 3 new connection requests waiting for your approval...',
-    date: '2023-04-30T19:05:00',
-    read: true,
-    hasAttachment: false,
-  },
-  {
-    id: 8,
-    sender: 'info@travel-agency.com',
-    subject: 'Your Travel Itinerary',
-    preview:
-      'Here is your complete travel itinerary for your upcoming trip to Paris...',
-    date: '2023-04-30T08:40:00',
-    read: false,
-    hasAttachment: true,
-  },
-];
+// const mockEmails = [
+//   {
+//     id: 1,
+//     sender: 'security@company.com',
+//     subject: 'Important Security Update',
+//     preview:
+//       'Please update your password immediately to ensure your account remains secure...',
+//     date: '2023-05-04T10:30:00',
+//     read: true,
+//     hasAttachment: true,
+//   },
+//   {
+//     id: 2,
+//     sender: 'newsletter@tech-updates.com',
+//     subject: 'Weekly Tech Newsletter',
+//     preview:
+//       'This week in tech: New AI developments, cybersecurity threats, and more...',
+//     date: '2023-05-03T14:15:00',
+//     read: false,
+//     hasAttachment: false,
+//   },
+//   {
+//     id: 3,
+//     sender: 'support@suspicious-domain.net',
+//     subject: 'Your Account Has Been Compromised',
+//     preview:
+//       'We have detected unusual activity on your account. Click here to verify...',
+//     date: '2023-05-03T09:45:00',
+//     read: false,
+//     hasAttachment: true,
+//   },
+//   {
+//     id: 4,
+//     sender: 'hr@yourcompany.com',
+//     subject: 'Monthly Team Update',
+//     preview:
+//       'Here are the updates from all departments for the month of May...',
+//     date: '2023-05-02T16:20:00',
+//     read: true,
+//     hasAttachment: false,
+//   },
+//   {
+//     id: 5,
+//     sender: 'no-reply@banking.com',
+//     subject: 'Transaction Alert',
+//     preview: 'A transaction of $500 has been made from your account...',
+//     date: '2023-05-02T11:10:00',
+//     read: true,
+//     hasAttachment: false,
+//   },
+//   {
+//     id: 6,
+//     sender: 'marketing@online-store.com',
+//     subject: 'Special Discount Just For You!',
+//     preview:
+//       "As a valued customer, we're offering you an exclusive 50% discount...",
+//     date: '2023-05-01T13:25:00',
+//     read: false,
+//     hasAttachment: false,
+//   },
+//   {
+//     id: 7,
+//     sender: 'notifications@social-network.com',
+//     subject: 'New Connection Request',
+//     preview: 'You have 3 new connection requests waiting for your approval...',
+//     date: '2023-04-30T19:05:00',
+//     read: true,
+//     hasAttachment: false,
+//   },
+//   {
+//     id: 8,
+//     sender: 'info@travel-agency.com',
+//     subject: 'Your Travel Itinerary',
+//     preview:
+//       'Here is your complete travel itinerary for your upcoming trip to Paris...',
+//     date: '2023-04-30T08:40:00',
+//     read: false,
+//     hasAttachment: true,
+//   },
+// ];
 
 export default function InboxView() {
-  const [emails, setEmails] = useState(mockEmails);
+  const [emails, setEmails] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [hoveredEmail, setHoveredEmail] = useState(null);
   const [scanningEmail, setScanningEmail] = useState(null);
   const [showScanDialog, setShowScanDialog] = useState(false);
   const [showScanedScreen, setShowScannedScreen] = useState(false);
   const [scanResults, setScanResults] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
+
+  // Fetch emails from FastAPI server
+  useEffect(() => {
+    const fetchEmails = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/gmail/messages');
+        const { emails } = await response.json();
+        setEmails(emails);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error fetching emails:', error);
+        setIsLoading(false);
+      }
+    };
+    fetchEmails();
+  }, []);
 
   const filteredEmails = emails.filter(
     (email) =>
@@ -126,36 +145,55 @@ export default function InboxView() {
     }
   };
 
-  const handleScanEmail = (email) => {
-    // setSelectedEmail(email);
-    // Simulate scanning process
-    setTimeout(() => {
-      const result = {
-        id: email.id,
-        subject: email.subject,
-        sender: email.sender,
-        scanDate: new Date().toISOString(),
-        threats:
-          Math.random() > 0.7
-            ? [
-                {
-                  type: 'Phishing',
-                  severity: 'High',
-                  description: 'Suspicious link detected',
-                },
-                {
-                  type: 'Malware',
-                  severity: 'Medium',
-                  description: 'Potential malicious attachment',
-                },
-              ]
-            : [],
-        isSafe: Math.random() > 0.7 ? false : true,
-        score: Math.floor(Math.random() * 100),
-      };
-      setScanResults(result);
+  const handleScanEmail = async (email) => {
+    try {
+      const emailShield = JSON.parse(localStorage.getItem('emailShield'));
+      if (!emailShield.access_token) throw new Error('User not authenticated');
+
+      // Step 1: Check for spam
+      const spamResponse = await fetch('http://localhost:8000/check_spam', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${emailShield.access_token}`,
+        },
+        body: JSON.stringify({ text: email.raw_body }),
+      });
+
+      if (!spamResponse.ok) throw new Error('Error checking for spam');
+      const spamResult = await spamResponse.json();
+      const isSpam = spamResult.spam;
+
+      // Store the spam check result
+      const scanResult = { ...email, isSpam };
+
+      // Step 2: Only check for malware if attachment exists
+      const filename = email.attachments?.[0]?.filename;
+      if (filename) {
+        const predictResponse = await fetch(
+          `http://localhost:8000/predict?filename=${filename}`,
+          {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${emailShield.access_token}`,
+            },
+          }
+        );
+
+        if (!predictResponse.ok) throw new Error('Error scanning the file');
+        const malwareDetails = await predictResponse.json();
+        scanResult.malwareDetails = malwareDetails;
+      }
+
+      console.log(scanResult);
+
+      setScanResults(scanResult);
       setShowScannedScreen(true);
-    }, 1000);
+    } catch (error) {
+      console.error('Error scanning email:', error);
+    } finally {
+      setShowScanDialog(false);
+    }
   };
 
   return (
@@ -165,7 +203,8 @@ export default function InboxView() {
           <div className="p-6 h-full flex flex-col relative">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
               <h1 className="text-2xl font-bold md:text-3xl">Inbox</h1>
-              <div className="flex items-center gap-2">
+
+              <div className="flex items-center gap-2 text-sm">
                 <div className="relative flex-1 md:w-80">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -210,9 +249,19 @@ export default function InboxView() {
 
             <div className="flex-1 bg-white overflow-hidden text-xs">
               <div className="h-full overflow-auto">
-                {filteredEmails.length === 0 ? (
-                  <div className="flex items-center justify-center h-full">
-                    <p className="text-gray-500">No emails found</p>
+                {isLoading ? (
+                  <div className="flex justify-center items-center w-full h-full flex-col gap-4">
+                    <div
+                      className="animate-spin inline-block size-6 border-3 border-current border-t-transparent text-blue-600 rounded-full dark:text-blue-500"
+                      role="status"
+                      aria-label="loading"
+                    >
+                      <span className="sr-only">Loading...</span>
+                    </div>
+                    <div className="font-semibold tracking-tight">
+                      {' '}
+                      Loading{' '}
+                    </div>
                   </div>
                 ) : (
                   <ul className="divide-y divide-gray-200">
@@ -224,23 +273,29 @@ export default function InboxView() {
                         }`}
                         onMouseEnter={() => setHoveredEmail(email.id)}
                         onMouseLeave={() => setHoveredEmail(null)}
+                        onClick={() =>
+                          navigate('/email-details', { state: email })
+                        }
                       >
                         <div className="flex items-start gap-2 flex-col">
                           <div className="w-full">
                             <div className="grid grid-cols-12 gap-2">
                               {/* Sender */}
-                              <div className="col-span-2">
+                              <div className="col-span-3 flex items-center gap-3">
                                 <span
-                                  className={`font-medium ${
-                                    !email.read ? 'font-semibold' : ''
+                                  className={`${
+                                    !email.read ? 'font-semibold truncate' : ''
                                   }`}
                                 >
-                                  {email.sender}
+                                  {email.from_name}
+                                </span>
+                                <span className="text-gray-500 italic w-40 truncate block">
+                                  {email.from_email}
                                 </span>
                               </div>
                               {/* Subject and Date */}
                               <div
-                                className={`col-span-10 flex justify-between ${
+                                className={`col-span-9 flex justify-between ${
                                   !email.read ? 'font-semibold' : ''
                                 }`}
                               >
@@ -250,19 +305,24 @@ export default function InboxView() {
                                 </span>
                               </div>
                             </div>
-                            <p className=" text-gray-500 truncate mt-2">
-                              {email.preview}
+                            <p
+                              className={`text-gray-500 truncate mt-2 ${
+                                hoveredEmail === email.id && 'pr-40'
+                              }`}
+                            >
+                              {email.snippet}
                             </p>
                           </div>
 
-                          {email.hasAttachment && (
+                          {email.attachments.map((attachment) => (
                             <div
                               className="bg-gray-200 px-2 py-1 rounded-full text-gray-600"
                               style={{ fontSize: '0.65rem' }}
+                              key={attachment.filename}
                             >
-                              Attachment
+                              {attachment.filename}
                             </div>
-                          )}
+                          ))}
                         </div>
 
                         {hoveredEmail === email.id && (
@@ -291,7 +351,7 @@ export default function InboxView() {
       )}
       {/* Scanning Dialog */}
       {showScanDialog && (
-        <div className="fixed inset-0 bg-blue-900/80 backdrop-blur-sm bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-gray-400/80 backdrop-blur-sm bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl shadow-lg max-w-md w-full mx-4 overflow-hidden">
             <div className="p-6">
               <h3 className="text-lg font-medium mb-1">Scanning Email</h3>
@@ -313,7 +373,12 @@ export default function InboxView() {
           </div>
         </div>
       )}
-      {showScanedScreen && <ScanResults email={scanResults} />}
+      {showScanedScreen && (
+        <ScanResults
+          email={scanResults}
+          onBack={() => setShowScannedScreen(false)}
+        />
+      )}
     </>
   );
 }

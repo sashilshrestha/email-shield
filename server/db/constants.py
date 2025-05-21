@@ -47,6 +47,13 @@ APPLICATION_USERS = {
         "last_name": "Johnson",
         "email": "jermy.johnson@emailshield.com",
         "password_hash": "scrypt:32768:8:1$FFpcE5aVLkOEP4BK$aa491703f431019fe0377b0c905df67bec351bec7c8e483022794597a8bf90364beb191832e3496f518ff44fe01e264f3562810db991e98d57c3790294058aa1"
+    },
+    8: {
+        "role": "admin",
+        "first_name": "System",
+        "last_name": "Admin",
+        "email": "system@emailshield.com",
+        "password_hash": "scrypt:32768:8:1$eQWXLeLUamXnc3zv$fe20e387e51cf5abc4badbd90ff1df5d2525df760cfbd2be6c411ff3b950df8b09ca71b2e16dd728dc3b323c357a95b0bb8bbf22b4041a947212ea960d754787"
     }
 }
 

@@ -1,17 +1,28 @@
-'use client';
-
+import {
+  LogOut,
+  Users,
+  LayoutDashboard,
+  Inbox,
+  Shield,
+  BadgeAlert,
+} from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router';
+import { useNavigate, useLocation, useLoaderData } from 'react-router';
 
-export default function Sidebar({ currentView, isOpen, setIsOpen }) {
+export default function Sidebar({ currentView, isOpen, setIsOpen, isAdmin }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [isMobile, setIsMobile] = useState(false);
+  const [userDetails, setUserDetails] = useState({ email: '', name: '' });
 
   useEffect(() => {
     const checkIsMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
+
+    const { email, name } = JSON.parse(localStorage.getItem('emailShield'));
+
+    setUserDetails({ email, name });
 
     // Initial check
     checkIsMobile();
@@ -25,16 +36,44 @@ export default function Sidebar({ currentView, isOpen, setIsOpen }) {
     };
   }, []);
 
-  const menuItems = [
+  const handleLogout = () => {
+    localStorage.removeItem('emailShield');
+    return navigate('/login');
+  };
+
+  const clientMenuItems = [
     {
       id: '',
       label: 'Dashboard',
-      icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6',
+      icon: <LayoutDashboard size={20} />,
     },
     {
       id: 'inbox',
       label: 'Inbox',
-      icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
+      icon: <Inbox size={20} />,
+    },
+    // {
+    //   id: 'settings',
+    //   label: 'Settings',
+    //   icon: 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z',
+    // },
+  ];
+
+  const adminMenuItems = [
+    {
+      id: 'user-risk-scores',
+      label: 'User Risk Scores',
+      icon: <Users size={20} />,
+    },
+    {
+      id: 'user-reports',
+      label: 'User Reports',
+      icon: <BadgeAlert size={20} />,
+    },
+    {
+      id: 'security-policies',
+      label: 'Security Policies',
+      icon: <Shield size={20} />,
     },
   ];
 
@@ -80,42 +119,30 @@ export default function Sidebar({ currentView, isOpen, setIsOpen }) {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
-          {menuItems.map((item) => (
+        <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
+          {(isAdmin ? adminMenuItems : clientMenuItems).map((item) => (
             <button
               key={item.id}
               onClick={() => {
                 navigate(item.id);
                 if (isMobile) setIsOpen(false);
               }}
-              className={`w-full flex items-center px-4 py-3 text-sm rounded-lg transition-colors ${
-                location.pathname === `/${item.id}`
-                  ? 'bg-blue-50 text-blue-700 '
+              className={`w-full flex items-center px-4 py-3 text-sm rounded-lg transition-colors cursor-pointer ${
+                location.pathname === `/${isAdmin ? 'admin/' : ''}${item.id}`
+                  ? 'bg-blue-50 text-blue-700 font-medium'
                   : 'text-gray-700 hover:bg-gray-100 '
               }`}
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 mr-3"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={1.5}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d={item.icon}
-                />
-              </svg>
+              <div className="h-5 w-5 mr-2"> {item.icon}</div>
+
               {item.label}
             </button>
           ))}
         </nav>
 
         {/* User profile */}
-        <div className="p-4 border-t border-gray-200 ">
-          <button className="flex items-center w-full px-4 py-2 text-sm rounded-lg text-gray-700 hover:bg-gray-100">
+        <div className="p-4 border-t border-gray-200 flex justify-between items-center">
+          <button className="flex items-center px-3 py-2 text-sm rounded-lg text-gray-700 hover:bg-gray-100 ">
             <div className="w-8 h-8 rounded-full bg-gray-200  mr-3 flex items-center justify-center text-gray-500 ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -131,9 +158,15 @@ export default function Sidebar({ currentView, isOpen, setIsOpen }) {
               </svg>
             </div>
             <div className="text-left">
-              <div className="font-medium">John Doe</div>
-              <div className="text-xs text-gray-500 ">john@example.com</div>
+              <div className="font-medium">{userDetails?.name}</div>
+              <div className="text-xs text-gray-500 truncate w-26">{userDetails?.email}</div>
             </div>
+          </button>
+          <button
+            className="flex items-center text-sm -gray-700 hover:bg-gray-100  rounded-full h-9 p-2 w-9 justify-center cursor-pointer"
+            onClick={handleLogout}
+          >
+            <LogOut color="grey" size={16} />
           </button>
         </div>
       </div>

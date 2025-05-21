@@ -1,9 +1,11 @@
+import { useEffect, useState } from 'react';
+import { ResponsivePie } from '@nivo/pie';
+
 export default function DashboardStats() {
-  // Mock data for dashboard stats
-  const stats = [
+  const [stats, setStats] = useState([
     {
       title: 'Emails Scanned',
-      value: '1,248',
+      value: '---',
       description: 'Last 30 days',
       change: '+12.5%',
       icon: (
@@ -23,7 +25,7 @@ export default function DashboardStats() {
     },
     {
       title: 'Threats Detected',
-      value: '38',
+      value: '---',
       description: 'Last 30 days',
       change: '-4.3%',
       icon: (
@@ -43,7 +45,7 @@ export default function DashboardStats() {
     },
     {
       title: 'Clean Emails',
-      value: '1,210',
+      value: '---',
       description: 'Last 30 days',
       change: '+14.2%',
       icon: (
@@ -61,39 +63,89 @@ export default function DashboardStats() {
         </svg>
       ),
     },
-    {
-      title: 'Scan Speed',
-      value: '1.2s',
-      description: 'Average scan time',
-      change: '-0.3s',
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5 text-amber-500"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path
-            fillRule="evenodd"
-            d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"
-            clipRule="evenodd"
-          />
-        </svg>
-      ),
-    },
-  ];
+  ]);
+
+  const [chart, setChart] = useState([]);
+
+  const fetchUserScans = async () => {
+    try {
+      const { access_token } = JSON.parse(localStorage.getItem('emailShield'));
+
+      console.log(access_token);
+
+      const response = await fetch('http://localhost:8000/user-scans', {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+
+      if (!response.ok) throw new Error('Failed to fetch scan data');
+
+      const data = await response.json();
+      console.log(data.details);
+
+      setStats((prevStats) =>
+        prevStats.map((stat) => {
+          if (stat.title === 'Emails Scanned') {
+            return { ...stat, value: data.details.total_scans.toString() };
+          } else if (stat.title === 'Threats Detected') {
+            return { ...stat, value: data.details.malware_results.toString() };
+          } else if (stat.title === 'Clean Emails') {
+            return { ...stat, value: data.details.clean_results.toString() };
+          }
+          return stat;
+        })
+      );
+
+      // setChart([
+      //   {
+      //     id: 'go',
+      //     label: 'go',
+      //     value: 340,
+      //     color: 'hsl(40, 70%, 50%)',
+      //   },
+      //   {
+      //     id: 'php',
+      //     label: 'php',
+      //     value: 458,
+      //     color: 'hsl(279, 70%, 50%)',
+      //   },
+      //   {
+      //     id: 'css',
+      //     label: 'css',
+      //     value: 374,
+      //     color: 'hsl(313, 70%, 50%)',
+      //   },
+      //   {
+      //     id: 'javascript',
+      //     label: 'javascript',
+      //     value: 577,
+      //     color: 'hsl(277, 70%, 50%)',
+      //   },
+      //   {
+      //     id: 'sass',
+      //     label: 'sass',
+      //     value: 471,
+      //     color: 'hsl(32, 70%, 50%)',
+      //   },
+      // ]);
+      setChart(data.details.distribution);
+    } catch (error) {
+      console.error('Error fetching scans:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserScans();
+  }, []);
 
   return (
     <div className="p-6 space-y-8">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold md:text-3xl">Dashboard</h1>
-        <div className="text-sm text-gray-500 dark:text-gray-400">
-          Last updated: {new Date().toLocaleDateString()}{' '}
-          {new Date().toLocaleTimeString()}
-        </div>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {stats.map((stat, index) => (
           <div
             key={index}
@@ -106,50 +158,46 @@ export default function DashboardStats() {
               {stat.icon}
             </div>
             <div className="text-2xl font-bold">{stat.value}</div>
-            <div className="flex items-center mt-2 text-xs">
-              <span className="text-gray-500 dark:text-gray-400">
-                {stat.description}
-              </span>
-              <span
-                className={`ml-2 ${
-                  stat.change.startsWith('+')
-                    ? 'text-green-500'
-                    : 'text-red-500'
-                }`}
-              >
-                {stat.change}
-              </span>
-            </div>
           </div>
         ))}
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
           <div className="p-6 border-b border-gray-200 dark:border-gray-700">
             <h3 className="font-medium">Threat Distribution</h3>
             <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
               Types of threats detected
             </p>
           </div>
-          <div className="h-80 flex items-center justify-center p-6">
-            <div className="text-center text-gray-500 dark:text-gray-400">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="mx-auto h-16 w-16 opacity-50"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1.5}
-                  d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                />
-              </svg>
-              <p className="mt-2">Chart visualization would go here</p>
-            </div>
+          <div className='h-[20rem]'>
+            <ResponsivePie /* or Pie for fixed dimensions */
+              data={chart}
+              margin={{ top: 30, right: 80, bottom: 80, left: 80 }}
+              innerRadius={0.5}
+              padAngle={0.6}
+              cornerRadius={2}
+              activeOuterRadiusOffset={8}
+              arcLinkLabelsSkipAngle={10}
+              arcLinkLabelsTextColor="#333333"
+              arcLinkLabelsThickness={2}
+              arcLinkLabelsColor={{ from: 'color' }}
+              arcLabelsSkipAngle={10}
+              arcLabelsTextColor={{
+                from: 'color',
+                modifiers: [['darker', 2]],
+              }}
+              legends={[
+                {
+                  anchor: 'bottom',
+                  direction: 'row',
+                  translateY: 56,
+                  itemWidth: 100,
+                  itemHeight: 18,
+                  symbolShape: 'circle',
+                },
+              ]}
+            />
           </div>
         </div>
 
